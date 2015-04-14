@@ -1,0 +1,6 @@
+This app is specifically built for Commodiy Vector tech test.
+
+The project is built upon Play with scala, angularJs and mongoDb
+=================================
+
+This file will be packaged with your application, when using `activator dist`.
