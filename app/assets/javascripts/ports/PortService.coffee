@@ -11,7 +11,7 @@ class PortService
         @$log.debug "listPorts()"
         deferred = @$q.defer()
 
-        @$http.get("/ports")
+        @$http.get("/listPorts")
         .success((data, status, headers) =>
                 @$log.info("Successfully listed Ports - status #{status}")
                 deferred.resolve(data)
@@ -26,7 +26,7 @@ class PortService
         @$log.debug "create port #{angular.toJson(port, true)}"
         deferred = @$q.defer()
 
-        @$http.post('/port', port)
+        @$http.post('/newPort', port)
         .success((data, status, headers) =>
                 @$log.info("Successfully created port - status #{status}")
                 deferred.resolve(data)
@@ -41,7 +41,7 @@ class PortService
       @$log.debug "update port #{angular.toJson(port, true)}"
       deferred = @$q.defer()
 
-      @$http.put("/port/#{name}/#{locode}/#{polygon}", port)
+      @$http.put("/updatePort/#{name}/#{locode}/#{polygon}", port)
       .success((data, status, headers) =>
               @$log.info("Successfully updated port - status #{status}")
               deferred.resolve(data)

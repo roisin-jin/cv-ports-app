@@ -6,7 +6,7 @@
 GET     /                           controllers.Application.index
 
 # Port management API
-GET     /ports                                  controllers.Application.listPorts
+GET     /listPorts                              controllers.Application.listPorts
 POST    /newPort                                controllers.Application.createPort
 PUT     /updatePort/:portName/:locode/:polygon  controllers.Application.updatePort(portName: String, locode: String, polygon: Ploygon)
 
