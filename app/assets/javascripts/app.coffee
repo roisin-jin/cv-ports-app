@@ -14,12 +14,9 @@ angular.module('cvPortsApp.routeConfig', ['ngRoute'])
     .config ($routeProvider) ->
         $routeProvider
             .when('/', {
-                templateUrl: '/assets/partials/view.html'
+                templateUrl: '/assets/partials/tabs.html'
             })
-            .when('/ports/create', {
-                templateUrl: '/assets/partials/create.html'
-            })
-            .when('/ports/edit/:name/:locode/:polygon', {
+            .when('/ports/update/:name/:locode/:polygon', {
                 templateUrl: '/assets/partials/update.html'
             })
             .otherwise({redirectTo: '/'})
@@ -29,13 +26,6 @@ angular.module('cvPortsApp.routeConfig', ['ngRoute'])
             requireBase: false
         })
 
-
 @controllersModule = angular.module('cvPortsApp.controllers', [uiGmapgoogle-maps])
-                            .config ($uiGmapGoogleMapApiProvider) ->
-                                   $uiGmapGoogleMapApiProvider.configure({
-                                      //key: 'your api key',
-                                      v: '3.17',
-                                      libraries: 'geometry,visualization'})
-
 @servicesModule = angular.module('cvPortsApp.services', [])
 @modelsModule = angular.module('cvPortsApp.models', [])

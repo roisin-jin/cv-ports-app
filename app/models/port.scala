@@ -3,7 +3,7 @@ package models
 /**
  * Created by roisin_jin on 14/04/2015.
  */
-case class Polygon (lat: Double, lon: Double, ele: Double)
+case class Polygon (lat: Double, lon: Double)
 
 case class Port (name: String, locode: String, polygon: Polygon)
 

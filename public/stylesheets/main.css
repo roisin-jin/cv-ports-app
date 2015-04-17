@@ -16,3 +16,5 @@ footer {
 	padding:10px 0 0 0;
 	background:transparent url(../img/logo-cv-login.png) no-repeat 50% 0
 }
+
+.angular-google-map-container { height: 400px; }

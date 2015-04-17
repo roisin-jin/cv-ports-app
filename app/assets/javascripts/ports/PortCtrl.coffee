@@ -4,6 +4,17 @@ class PortCtrl
     constructor: (@$log, @PortService) ->
         @$log.debug "constructing PortController"
         @ports = []
+
+        @map = {
+           center: {
+              latitude: 51.219053,
+              longitude: 4.404418
+              },
+           zoom: 15,
+           bounds: {}
+           }
+
+        @options = {scrollwheel: false};
         @gmarkers = []
         @getAllPortsAndMarkers()
 
@@ -17,8 +28,16 @@ class PortCtrl
 
                 @ports = data
 
-                for port in @ports:
-                    @gmarkers.push new google.maps.LatLng(port.polygon.lan, port.polygon.lon)
+                for (var i = 0; i < data.length; i++):
+                    var port = data[i]
+                    var marker = {
+                    latitude: port.polyon.lat,
+                    longitude: port.polygon.lon,
+                    title: port.locode + "(" + port.name + ")"
+                    }
+
+                    marker['id'] = i
+                    @gmarkers.push marker
             ,
             (error) =>
                 @$log.error "Unable to get Ports: #{error}"
