@@ -11,7 +11,7 @@ object JsonFormats {
 
   import play.api.libs.json.Json
 
-  // Generates Writes and Reads for Feed and Port
+  // Generates Writes and Reads for Polygon and Port
   implicit val polygonFormat = Json.format[Polygon]
   implicit val portFormat = Json.format[Port]
 }
