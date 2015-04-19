@@ -1,7 +1,7 @@
 <div ng-controller="PortCtrl as pc">
-
+    <br/>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-4">
             <div class="form-group">
                 <input class="form-control" type="text" ng-model="searchText" placeholder="Type here to filter Ports...">
                 <hr>
@@ -27,7 +27,7 @@
 
         </div>
 
-        <div class="col-md-8" ng-hide="pc.ports.length">
+        <div class="col-sm-8" ng-hide="pc.ports.length">
             <div id="map_canvas">
                 <ui-gmap-google-map center="pc.map.center" zoom="pc.map.zoom" draggable="true" options="pc.options">
                     <ui-gmap-markers models="pc.gmarkers" coords="'self'" icon="'icon'"></ui-gmap-markers>

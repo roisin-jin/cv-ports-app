@@ -18,6 +18,14 @@ class PortCtrl
         @gmarkers = []
         @getAllPortsAndMarkers()
 
+    getPortMark: (port, index) ->
+        {
+            latitude: port.polygon.lat,
+            longitude: port.polygon.lon,
+            title: port.locode + '(' + port.name + ')',
+            id: index
+        }
+
     getAllPortsAndMarkers: () ->
         @$log.debug "getAllPorts()"
 
@@ -25,19 +33,8 @@ class PortCtrl
         .then(
             (data) =>
                 @$log.debug "Promise returned #{data.length} Ports"
-
                 @ports = data
-
-                for (var i = 0; i < data.length; i++):
-                    var port = data[i]
-                    var marker = {
-                    latitude: port.polyon.lat,
-                    longitude: port.polygon.lon,
-                    title: port.locode + "(" + port.name + ")"
-                    }
-
-                    marker['id'] = i
-                    @gmarkers.push marker
+                @gmarkers = (@getPortMark port, i for port, i in data)
             ,
             (error) =>
                 @$log.error "Unable to get Ports: #{error}"

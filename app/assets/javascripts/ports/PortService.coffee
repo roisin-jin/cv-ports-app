@@ -11,7 +11,7 @@ class PortService
         @$log.debug "listPorts()"
         deferred = @$q.defer()
 
-        @$http.get("/listPorts")
+        @$http.get("/listAllPorts")
         .success((data, status, headers) =>
                 @$log.info("Successfully listed Ports - status #{status}")
                 deferred.resolve(data)

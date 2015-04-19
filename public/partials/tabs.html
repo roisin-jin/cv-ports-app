@@ -1,6 +1,6 @@
-<section ng-controller="TabsetCtrl as tc">
-  <tabset justified="true">
-    <tab ng-repeat="tab in tc.tabs" heading="{{ tab.heading }}" active="tab.active">
+<section ng-controller="TabSetCtrl as tc">
+  <tabset>
+    <tab ng-repeat="tab in tc.tabs" heading="{{tab.heading}}" active="tab.active">
          <div ng-include="tab.template"></div>
     </tab>
   </tabset>

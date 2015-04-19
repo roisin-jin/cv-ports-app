@@ -9,12 +9,9 @@ footer {
     text-align: center;
 }
 
-
 .cv-logo {
-    text-indent:-5000px;
 	height:85px;
-	padding:10px 0 0 0;
-	background:transparent url(../img/logo-cv-login.png) no-repeat 50% 0
+	background:transparent url(../images/cv-logo.png) no-repeat 50% 0
 }
 
 .angular-google-map-container { height: 400px; }
