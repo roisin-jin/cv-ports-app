@@ -1,5 +1,12 @@
 <div ng-controller="PortCtrl as pc">
     <br/>
+
+    <tabset type="pills">
+        <tab ng-repeat="cl in pc.countriesFrstChars" heading="{{cl}}"></tab>
+    </tabset>
+
+    <br/>
+
     <div class="row">
         <div class="col-sm-4">
             <div class="form-group">
@@ -8,7 +15,7 @@
             </div>
 
             <table id="port_list" class="table table-striped">
-                <tbody>              
+                <tbody>
                 <tr ng-repeat="port in pc.ports">
                     <td>
                         <a href="#" class="list-group-item"><strong>{{ port.locode }}</strong>({{port.name}})</a>
@@ -27,8 +34,8 @@
 
         </div>
 
-        <div class="col-sm-8" ng-hide="pc.ports.length">
-            <div id="map_canvas">
+        <div class="col-sm-8">
+            <div id="map_canvas" ng-hide="pc.ports.length">
                 <ui-gmap-google-map center="pc.map.center" zoom="pc.map.zoom" draggable="true" options="pc.options">
                     <ui-gmap-markers models="pc.gmarkers" coords="'self'" icon="'icon'"></ui-gmap-markers>
                 </ui-gmap-google-map>

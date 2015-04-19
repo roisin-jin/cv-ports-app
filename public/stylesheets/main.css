@@ -14,4 +14,9 @@ footer {
 	background:transparent url(../images/cv-logo.png) no-repeat 50% 0
 }
 
+.nav-tabs li a {
+   font-fmaily: @font-family-monospace;
+   font-size: 18px;
+}
+
 .angular-google-map-container { height: 400px; }

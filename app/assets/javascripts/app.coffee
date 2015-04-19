@@ -1,12 +1,23 @@
 dependencies = [
 	'ngRoute',
 	'ui.bootstrap',
+	'uiGmapgoogle-maps',
 	'cvPortsApp.services',
-	'cvPortsApp.controllers'
+	'cvPortsApp.controllers',
+	'cvPortsApp.routeConfig'
 ]
 
 app = angular.module('cvPortsApp', dependencies)
-app.config ($locationProvider) ->
+
+angular.module('cvPortsApp.routeConfig', ['ngRoute'])
+    .config ($routeProvider) ->
+            $routeProvider
+                .when('/', {templateUrl: '/assets/partials/view.html'})
+                .when('/listPorts', {templateUrl: '/assets/partials/view.html'})
+                .when('/port/create', {templateUrl: '/assets/partials/create.html'})
+                .when('/about', {templateUrl: '/assets/partials/about.html'})
+                .otherwise({redirectTo: '/listPorts'})
+	.config ($locationProvider) ->
 		$locationProvider.html5Mode({
 			enabled: true,
 			requireBase: false
@@ -14,3 +25,4 @@ app.config ($locationProvider) ->
 
 @controllersModule = angular.module('cvPortsApp.controllers', [])
 @servicesModule = angular.module('cvPortsApp.services', [])
+

@@ -7,7 +7,6 @@ class CreatePortCtrl
 
     CreatePort: () ->
         @$log.debug "CreatePort()"
-        @port.active = true
         @portService.CreatePort(@port)
         .then(
             (data) =>

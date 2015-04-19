@@ -1,43 +1,33 @@
 
 class PortCtrl
 
-    constructor: (@$log, @PortService) ->
-        @$log.debug "constructing PortController"
-        @ports = []
+		constructor: (@$log, @PortService) ->
 
-        @map = {
-           center: {
-              latitude: 51.219053,
-              longitude: 4.404418
-              },
-           zoom: 15,
-           bounds: {}
-           }
+				@$log.debug "constructing PortController"
 
-        @options = {scrollwheel: false};
-        @gmarkers = []
-        @getAllPortsAndMarkers()
+				@countriesFrstChars = ["A", "B", "C", "D", "E",
+									   "F", "G", "H", "I", "J", 
+									   "K", "L", "M", "N", "O", 
+									   "P", "Q", "R", "S", "T", 
+									   "U", "V", "W", "Y", "Z"]
 
-    getPortMark: (port, index) ->
-        {
-            latitude: port.polygon.lat,
-            longitude: port.polygon.lon,
-            title: port.locode + '(' + port.name + ')',
-            id: index
-        }
+				@ports = []
+				@map = {}
+				@options = {}
+				@gmarkers = []
+				@getAllPortsAndMarkers("A")
 
-    getAllPortsAndMarkers: () ->
-        @$log.debug "getAllPorts()"
+		getAllPortsAndMarkers: (frstChar) ->
+				@$log.debug "getAllPorts()"
 
-        @PortService.listPorts()
-        .then(
-            (data) =>
-                @$log.debug "Promise returned #{data.length} Ports"
-                @ports = data
-                @gmarkers = (@getPortMark port, i for port, i in data)
-            ,
-            (error) =>
-                @$log.error "Unable to get Ports: #{error}"
-            )
+				@PortService.listPortsStartsWith(frstChar)
+				.then(
+						(data) =>
+								@$log.debug "Promise returned #{data.length} Ports"
+								@ports = data
+						,
+						(error) =>
+								@$log.error "Unable to get Ports: #{error}"
+					)
 
-controllersModule.controller('PortCtrl', PortCtrl)
+controllersModule.controller("PortCtrl", PortCtrl)
