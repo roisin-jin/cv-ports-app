@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                           controllers.Application.index
+GET     /getISOCountries            controllers.Application.getISO3166CountryMap
 
 # Port management API
 GET     /listAllPorts                        controllers.Application.listAllPorts

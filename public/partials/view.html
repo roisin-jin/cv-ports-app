@@ -1,41 +1,47 @@
 <div ng-controller="PortCtrl as pc">
     <br/>
 
+    <p class="lead">Choose ports with Locode starting from <small>A-Z:</small></p>
     <tabset type="pills">
-        <tab ng-repeat="cl in pc.countriesFrstChars" heading="{{cl}}"></tab>
+        <tab ng-repeat="cl in pc.countriesFrstChars" heading="{{cl}}" ng-click="pc.loadCountries(cl)"></tab>
     </tabset>
 
-    <br/>
+    <br />
 
     <div class="row">
-        <div class="col-sm-4">
+
+        <div class="col-md-4">
             <div class="form-group">
                 <input class="form-control" type="text" ng-model="searchText" placeholder="Type here to filter Ports...">
                 <hr>
             </div>
 
-            <table id="port_list" class="table table-striped">
-                <tbody>
-                <tr ng-repeat="port in pc.ports">
-                    <td>
-                        <a href="#" class="list-group-item"><strong>{{ port.locode }}</strong>({{port.name}})</a>
-                    </td>
-                    <td>
-                        <a ng-href="/#/ports/update/{{port.name}}/{{port.locode}}" class="btn btn-success pull-right" id="btn_port_update">Update</a>
-                    </td>
-                </tr>
-                <tr ng-hide="pc.ports.length">
-                    <td colspan="3">
-                        <p class="text-center">No Ports Found</p>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <accordion close-others="true">
+                <accordion-group ng-repeat="countryCode in pc.availCountries" is-open="status.open">
+                    <accordion-heading>
+                        {{countryCode}} ({{pc.ISOCountries[countryCode]}})
+                        <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                    </accordion-heading>
 
+                    <table class="table table-striped">
+                        <tr ng-repeat="port in pc.ports[countryCode]">
+                            <td>{{port.locode.country }} {{port.locode.port}} ({{port.name}})</td>
+                            <!--<a ng-href="/#/ports/update/{{port.name}}/{{port.locode}}" class="btn btn-success pull-right" id="btn_port_update">Update</a>-->
+                        </tr>
+                    </table>
+                </accordion-group>
+                <br/>
+            </accordion>
+
+            <div ng-hide="pc.availCountries.length">
+                <td colspan="3">
+                    <p class="text-center">No Ports Found</p>
+                </td>
+            </div>
         </div>
 
-        <div class="col-sm-8">
-            <div id="map_canvas" ng-hide="pc.ports.length">
+        <div class="col-md-10">
+            <div id="map_canvas" ng-hide="pc.availCountries.length">
                 <ui-gmap-google-map center="pc.map.center" zoom="pc.map.zoom" draggable="true" options="pc.options">
                     <ui-gmap-markers models="pc.gmarkers" coords="'self'" icon="'icon'"></ui-gmap-markers>
                 </ui-gmap-google-map>

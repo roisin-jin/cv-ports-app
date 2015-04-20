@@ -12,22 +12,27 @@ class PortCtrl
 									   "U", "V", "W", "Y", "Z"]
 
 				@ports = []
-				@map = {}
-				@options = {}
-				@gmarkers = []
-				@getAllPortsAndMarkers("A")
+				@availCountries = []
+				@ISOCountries = []
+				@getAllPortsAndISOCountries()
 
-		getAllPortsAndMarkers: (frstChar) ->
+		loadCountries: (frstChar) ->
+				@availCountries = (key for key, value of @ports when key.indexOf(frstChar) == 0).sort()
+
+		getAllPortsAndISOCountries: () ->
 				@$log.debug "getAllPorts()"
 
-				@PortService.listPortsStartsWith(frstChar)
+				@PortService.listAllPorts()
 				.then(
 						(data) =>
 								@$log.debug "Promise returned #{data.length} Ports"
 								@ports = data
+								@loadCountries("A")
 						,
 						(error) =>
 								@$log.error "Unable to get Ports: #{error}"
 					)
+
+				@PortService.loadISOCountries().then((data) => @ISOCountries = data)
 
 controllersModule.controller("PortCtrl", PortCtrl)

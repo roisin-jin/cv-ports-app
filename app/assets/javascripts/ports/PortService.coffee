@@ -7,7 +7,15 @@ class PortService
     constructor: (@$log, @$http, @$q) ->
         @$log.debug "constructing PortService"
 
-    listPorts: () ->
+    loadISOCountries: () ->
+        deferred = @$q.defer()
+        @$http.get("/getISOCountries")
+        .success((data, status, headers) => deferred.resolve(data))
+        .error((data, status, headers) => deferred.reject(data))
+
+        deferred.promise
+
+    listAllPorts: () ->
         @$log.debug "listPorts()"
         deferred = @$q.defer()
 
