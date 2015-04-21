@@ -60,11 +60,11 @@ class PortService
             )
         deferred.promise
 
-    updatePort: (name, locode, polygon) ->
+    updatePort: (name, locode, port) ->
       @$log.debug "update port #{angular.toJson(port, true)}"
       deferred = @$q.defer()
 
-      @$http.put("/updatePort/#{name}/#{locode}/#{polygon}", port)
+      @$http.put("/updatePort/#{name}/#{locode}", port)
       .success((data, status, headers) =>
               @$log.info("Successfully updated port - status #{status}")
               deferred.resolve(data)

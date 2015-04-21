@@ -12,7 +12,7 @@ class CreatePortCtrl
             (data) =>
                 @$log.debug "Promise returned #{data} port"
                 @port = data
-                @$location.path("/")
+                @$location.path("/listPorts")
             ,
             (error) =>
                 @$log.error "Unable to create port: #{error}"

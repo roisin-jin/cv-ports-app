@@ -1,10 +1,14 @@
 <div ng-controller="PortCtrl as pc">
     <br/>
 
-    <p class="lead">Choose ports with Locode starting from <small>A-Z:</small></p>
-    <tabset type="pills">
-        <tab ng-repeat="cl in pc.countriesFrstChars" heading="{{cl}}" ng-click="pc.loadCountries(cl)"></tab>
-    </tabset>
+    <div class="panel panel-primary">
+        <div class="panel-heading">Choose ports with Locode starting from <small>A-Z:</small></div>
+        <div class="panel-body">
+            <tabset type="pills">
+                <tab ng-repeat="cl in pc.countriesFrstChars" heading="{{cl}}" ng-click="pc.loadCountries(cl)"></tab>
+            </tabset>
+        </div>
+    </div>
 
     <br />
 
@@ -19,14 +23,24 @@
             <accordion close-others="true">
                 <accordion-group ng-repeat="countryCode in pc.availCountries" is-open="status.open">
                     <accordion-heading>
-                        {{countryCode}} ({{pc.ISOCountries[countryCode]}})
+                        {{countryCode}} - {{pc.ISOCountries[countryCode]}}
                         <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                     </accordion-heading>
 
                     <table class="table table-striped">
                         <tr ng-repeat="port in pc.ports[countryCode]">
-                            <td>{{port.locode.country }} {{port.locode.port}} ({{port.name}})</td>
-                            <!--<a ng-href="/#/ports/update/{{port.name}}/{{port.locode}}" class="btn btn-success pull-right" id="btn_port_update">Update</a>-->
+                            <td class="align-left">
+                                {{port.locode.country }} {{port.locode.port}} ({{port.name}})
+                                <i class="glyphicon glyphicon-asterisk" ng-hide="port.polygon.lat"></i>
+                            </td>
+                            <td>
+                                <button popover="edit port" popover-trigger="mouseenter"
+                                        class="pull-right glyphicon glyphicon-pencil" ng-click="pc.openUpdateModal(port)"></button>
+                            </td>
+                            <td>
+                                <button popover="delete port" popover-trigger="mouseenter"
+                                        class="pull-left glyphicon glyphicon-remove" ng-click="pc.openDeleteModal(port)"></button>
+                            </td>
                         </tr>
                     </table>
                 </accordion-group>

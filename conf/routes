@@ -10,7 +10,7 @@ GET     /getISOCountries            controllers.Application.getISO3166CountryMap
 GET     /listAllPorts                        controllers.Application.listAllPorts
 GET     /listPorts/:frstChar                 controllers.Application.listPorts(frstChar: String)
 POST    /newPort                             controllers.Application.createPort
-# PUT     /updatePort/:name/:locode/:polygon      controllers.Application.updatePort(portName: String, locode: String, polygon: Ploygon)
+PUT     /updatePort/:portName/:locode            controllers.Application.updatePort(portName: String, locode: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

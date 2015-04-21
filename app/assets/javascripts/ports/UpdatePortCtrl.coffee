@@ -1,38 +1,24 @@
 
 class UpdatePortCtrl
 
-	constructor: (@$log, @$location, @$routeParams, @PortService) ->
+	constructor: (@$log, @$modalInstance, @PortService, port_to_be_updated) ->
 			@$log.debug "constructing UpdatePortController"
-			@port = {}
-			@findPort()
+			@original_port = port_to_be_updated
+			@updated_port = port_to_be_updated
 
 	updatePort: () ->
-			@$log.debug "updatePort()"
-			@PortService.updatePort(@$routeParams.name, @$routeParams.locode, @$routeParams.polygon, @port)
-			.then(
-					(data) =>
-						@$log.debug "Promise returned #{data} Port"
-						@port = data
-						@$location.path("/")
-				,
-				(error) =>
-						@$log.error "Unable to update Port: #{error}"
-			)
+			if @original_port != @updated_port
+				 locode = @original_port.locode.country + @original_port.locode.port
+				 @PortService.updatePort(@original_port.name, locode, @updated_port)
+							 .then((data) =>
+								  @$log.debug "Promise returned #{data} Port"
+								  @$modalInstance.close(@updated_port)
+							  ,
+							  (error) =>
+								  @$log.error "Unable to update Port: #{error}"
+							  )
+			else @cancel()
 
-	findPort: () ->
-			# route params must be same name as provided in routing url in app.coffee
-			name = @$routeParams.name
-			locode = @$routeParams.locode
-			@$log.debug "findPort route params: #{name} #{locode}"
-
-			@PortService.listPorts()
-			.then(
-				(data) =>
-					@$log.debug "Promise returned #{data.length} Ports"
-					@port = (data.filter (port) -> port.name is name and port.locode is locode)[0]
-			,
-				(error) =>
-					@$log.error "Unable to get ports: #{error}"
-			)
+	cancel: () -> @$modalInstance.dismiss('cancel')
 
 controllersModule.controller('UpdatePortCtrl', UpdatePortCtrl)

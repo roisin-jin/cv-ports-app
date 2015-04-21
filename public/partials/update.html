@@ -1,0 +1,65 @@
+<div class="modal-header">
+    <h3 class="modal-title">Update Port:</h3>
+</div>
+
+<form id="UpdatePortForm" name="UpdatePortForm" class="form-horizontal" role="form" ng-submit="upc.updatePort()">
+
+    <div class="modal-body">
+
+        <div class="form-group">
+            <label id="lbl_name" for="port_name" class="col-sm-2 control-label">
+                <span class="red">* </span>Port Name:
+            </label>
+
+            <div class="col-sm-6">
+                <input type="text" class="form-control" name="port_name" id="port_name" value="{{upc.updated_port.name}}"
+                       popover="Max length of the name is 30 characters"  popover-trigger="focus" pattern="[\w\s-']{2,30}"
+                       ng-model="upc.updated_port.name" required />
+            </div>
+        </div>
+
+        <div class="form-group row">
+
+            <label id="lbl_locode_ct" for="locode_ct" class="col-sm-2 control-label">
+                <span class="red">* </span>Country code:
+            </label>
+
+            <div class="col-sm-2">
+                <input type="text" class="form-control" name="locode_ct" id="locode_ct" value="{{upc.updated_port.locode.country}}"
+                       ng-model="upc.updated_port.locode.country" pattern="[A-Z]{2}" required>
+            </div>
+
+            <label id="lbl_locode_pt" for="locode_pt" class="col-sm-2 control-label">
+                <span class="red">* </span>Port Code:
+            </label>
+
+            <div class="col-sm-2">
+                <input type="text" class="form-control" name="locode_pt" id="locode_pt" value="{{upc.updated_port.locode.port}}"
+                       popover="Please type in 3 capital alphabets"  popover-trigger="focus"
+                       ng-model="upc.updated_port.locode.port" pattern="[A-Z]{3}" required />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label id="lbl_polygon_lat" for="polygon_lat" class="col-sm-2 control-label">Latitude:</label>
+
+            <div class="col-sm-2">
+                <input type="number" class="form-control" name="polygon_lat" id="polygon_lat" value="{{upc.updated_port.polygon.lat}}"
+                       step="any" ng-model="upc.updated_port.polygon.lat">
+            </div>
+
+            <label id="lbl_polygon_lon" for="polygon_lon" class="col-sm-2 control-label">Longitude:</label>
+
+            <div class="col-sm-2">
+                <input type="number" class="form-control" name="polygon_lon" id="polygon_lon" value="{{upc.updated_port.polygon.lon}}"
+                       ng-model="upc.updated_port.polygon.lon">
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-warning" id="btn_update">Update</button>
+        <button class="btn btn-primary" ng-click="upc.cancel()">Cancel</button>
+    </div>
+
+</form>

@@ -48,10 +48,14 @@ object Application extends Controller with MongoController {
 			}.getOrElse(Future.successful(BadRequest("invalid json")))
 	}
 
-	def updatePort(portName: String, locode: Locode, polygon: Polygon) = Action.async(parse.json) {
+	def updatePort(portName: String, locode: String) = Action.async(parse.json) {
+		logger.info("Updating port: " + portName)
 		request => request.body.validate[Port].map {
 				port =>
-					val portSelector = Json.obj("locode" -> locode, "name" -> portName, "polygon" -> polygon)
+					val portSelector =
+						Json.obj("locode" -> Json.obj("country"->locode.substring(0, 2), "port"->locode.substring(2)),
+							       "name" -> portName)
+
 					portsCollection.update(portSelector, port).map {
 						lastError =>
 							logger.debug(s"Successfully updated with LastError: $lastError")

@@ -19,4 +19,8 @@ footer {
    font-size: 18px;
 }
 
+.red{
+   color: red;
+}
+
 .angular-google-map-container { height: 400px; }
