@@ -5,7 +5,7 @@
         <div class="panel-heading">Choose ports with Locode starting from <small>A-Z:</small></div>
         <div class="panel-body">
             <tabset type="pills">
-                <tab ng-repeat="cl in pc.countriesFrstChars" heading="{{cl}}" ng-click="pc.loadCountries(cl)"></tab>
+                <tab ng-repeat="cl in pc.countriesFrstChars" heading="{{cl}}" ng-click="pc.getPortsInCountriesStartsWith(cl)"></tab>
             </tabset>
         </div>
     </div>
@@ -23,7 +23,7 @@
             <accordion close-others="true">
                 <accordion-group ng-repeat="countryCode in pc.availCountries" is-open="status.open">
                     <accordion-heading>
-                        {{countryCode}} - {{pc.ISOCountries[countryCode]}}
+                        {{countryCode}} - {{ISOCountries[countryCode]}}
                         <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                     </accordion-heading>
 

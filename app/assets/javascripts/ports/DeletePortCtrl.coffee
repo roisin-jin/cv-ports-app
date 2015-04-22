@@ -1,11 +1,21 @@
 
 class DeletePortCtrl
 
-	constructor: (@$log, @$modalInstance, port_to_be_deleted) ->
+	constructor: (@$log, @$modalInstance, @PortService, port_to_be_deleted) ->
 			@$log.debug "constructing DeletePortController"
 			@port = port_to_be_deleted
 
-	delete: () -> @$modalInstance.close("confirm")
+	delete: () ->
+				@$log.debug "deletePort()"
+				name = @port.name
+				@PortService.deletePort(@port)
+				.then((status) =>
+									@$log.debug "Port #{name} is deleted"
+									@$modalInstance.close("confirm")
+						,
+						(error) => @$log.error "Unable to create port: #{error}"
+						)
+
 	cancel: () -> @$modalInstance.dismiss("cancel")
 
 controllersModule.controller('DeletePortCtrl', DeletePortCtrl)

@@ -6,7 +6,7 @@
 
     <br/><br/>
 
-    <form id="CreatePortForm" name="CreatePortForm" class="form-horizontal" role="form" ng-submit="cpc.CreatePort()">
+    <form id="CreatePortForm" name="CreatePortForm" class="form-horizontal" role="form" ng-submit="cpc.createPort()">
 
         <div class="form-group">
             <label id="lbl_name" for="name" class="col-sm-5 control-label">
@@ -16,7 +16,7 @@
             <div class="col-sm-6">
                 <input type="text" class="form-control" name="name" id="name" placeholder="port name"
                        popover="Max length of the name is 30 characters"  popover-trigger="focus"
-                       pattern="[\w\s-']{2,30}" ng-model="cpc.port.name" required>
+                       style="text-transform: capitalize" pattern="[\w\s-']{2,30}" ng-model="cpc.port.name" required>
             </div>
         </div>
 
@@ -27,7 +27,7 @@
 
             <div class="col-sm-2">
                 <input type="text" class="form-control" name="locode_ct" id="locode_ct" placeholder=""
-                       ng-model="cpc.port.locode.country" required>
+                       style="text-transform: uppercase" ng-model="cpc.port.locode.country" required>
             </div>
 
             <label id="lbl_locode_pt" for="locode_pt" class="col-sm-2 control-label">
@@ -36,7 +36,7 @@
 
             <div class="col-sm-2">
                 <input type="text" class="form-control" name="locode_pt" id="locode_pt" placeholder=""
-                       popover="Please type in 3 capital alphabets"  popover-trigger="focus"
+                       popover="Please type in 3 capital alphabets"  popover-trigger="focus" style="text-transform: uppercase"
                        ng-model="cpc.port.locode.port" pattern="[A-Z]{3}" required>
             </div>
         </div>

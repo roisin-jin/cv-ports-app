@@ -14,7 +14,7 @@
             <div class="col-sm-6">
                 <input type="text" class="form-control" name="port_name" id="port_name" value="{{upc.updated_port.name}}"
                        popover="Max length of the name is 30 characters"  popover-trigger="focus" pattern="[\w\s-']{2,30}"
-                       ng-model="upc.updated_port.name" required />
+                       style="text-transform: capitalize" ng-model="upc.updated_port.name" required />
             </div>
         </div>
 
@@ -26,7 +26,7 @@
 
             <div class="col-sm-2">
                 <input type="text" class="form-control" name="locode_ct" id="locode_ct" value="{{upc.updated_port.locode.country}}"
-                       ng-model="upc.updated_port.locode.country" pattern="[A-Z]{2}" required>
+                       style="text-transform: uppercase" ng-model="upc.updated_port.locode.country" pattern="[A-Z]{2}" required>
             </div>
 
             <label id="lbl_locode_pt" for="locode_pt" class="col-sm-2 control-label">
@@ -35,7 +35,7 @@
 
             <div class="col-sm-2">
                 <input type="text" class="form-control" name="locode_pt" id="locode_pt" value="{{upc.updated_port.locode.port}}"
-                       popover="Please type in 3 capital alphabets"  popover-trigger="focus"
+                       popover="Please type in 3 capital alphabets"  popover-trigger="focus" style="text-transform: uppercase"
                        ng-model="upc.updated_port.locode.port" pattern="[A-Z]{3}" required />
             </div>
         </div>

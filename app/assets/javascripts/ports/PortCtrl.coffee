@@ -1,7 +1,7 @@
 
 class PortCtrl
 
-		constructor: (@$log, @$modal, @$location, @PortService) ->
+		constructor: (@$log, @$modal, @$location, @$rootScope, @PortService) ->
 
 				@$log.debug "constructing PortController"
 
@@ -13,30 +13,32 @@ class PortCtrl
 
 				@ports = []
 				@availCountries = []
-				@ISOCountries = []
-				@getAllPortsAndISOCountries()
+				@getPortsInCountriesStartsWith("A")
+				@loadISOCountriesIfNeeded()
 
-		loadCountries: (frstChar) ->
-				@availCountries = (key for key, value of @ports when key.indexOf(frstChar) == 0).sort()
 
-		getAllPortsAndISOCountries: () ->
-				@$log.debug "getAllPorts()"
+		loadISOCountriesIfNeeded: () ->
+		        if @$rootScope.ISOCountries
+		           @$log.debug "ISO Countries already loaded"
+		        else
+		           @PortService.loadISOCountries().then((data) => @$rootScope.ISOCountries = data)
 
-				@PortService.listAllPorts()
+		getPortsInCountriesStartsWith: (frstChar) ->
+				@$log.debug "getPortsWithCountriesWith #{frstChar}"
+
+				@PortService.listPortsStartsWith(frstChar)
 				.then(
 						(data) =>
 								@$log.debug "Promise returned #{data.length} Ports"
 								@ports = data
-								@loadCountries("A")
+								@availCountries = (key for key, value of @ports).sort()
 						,
 						(error) =>
 								@$log.error "Unable to get Ports: #{error}"
 					)
 
-				@PortService.loadISOCountries().then((data) => @ISOCountries = data)
-
 		openUpdateModal: (port) ->
-				@$log.debug "update port"
+				@$log.debug "Opening update port modal"
 				port_value = {name: port.name,
 				locode: {country: port.locode.country, port: port.locode.port}}
 
@@ -54,7 +56,7 @@ class PortCtrl
 										   () => @$log.info "Modal dismissed at: " + new Date())
 
 		openDeleteModal: (port) ->
-				@$log.debug "delete port"
+				@$log.debug "Opening delete port modal"
 				port_value = {name: port.name, locode: port.locode, polygon: port.polygon}
 				modalInstance = @$modal.open({
 									templateUrl: '/assets/partials/delete.html',
@@ -65,7 +67,7 @@ class PortCtrl
 
 				modalInstance.result.then((deleted) => @$location.path("/listPorts")
 										   ,
-										   () => $log.info "Modal dismissed at: " + new Date())
+										   () => @$log.info "Modal dismissed at: " + new Date())
 
 
 controllersModule.controller("PortCtrl", PortCtrl)

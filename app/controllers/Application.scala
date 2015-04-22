@@ -3,8 +3,10 @@ package controllers
 import org.slf4j.{LoggerFactory, Logger}
 import play.api.libs.json._
 import scala.concurrent.Future
+
 import reactivemongo.api.Cursor
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import play.api.libs.concurrent.Promise
 import play.api._
 import play.api.mvc._
 import play.modules.reactivemongo.MongoController
@@ -38,6 +40,18 @@ object Application extends Controller with MongoController {
 		futureCountryMapJsonObj.map(re => Ok(re))
 	}
 
+	def deletePort(portName: String, locode: String) = Action.async {
+		logger.info("Deleting port: " + portName)
+		val portSelector = Json.obj("name" -> portName,
+				"locode" -> Json.obj("country" -> locode.substring(0, 2), "port" -> locode.substring(2)))
+
+		portsCollection.remove(portSelector, firstMatchOnly = true).map{
+			lastError =>
+					logger.debug(s"Successfully deleted port with LastError: $lastError")
+					Created(s"Port deleted")
+		}
+	}
+
 	def createPort = Action.async(parse.json) {
 		request => request.body.validate[Port].map {
 			port => portsCollection.insert(port).map {
@@ -52,9 +66,8 @@ object Application extends Controller with MongoController {
 		logger.info("Updating port: " + portName)
 		request => request.body.validate[Port].map {
 				port =>
-					val portSelector =
-						Json.obj("locode" -> Json.obj("country"->locode.substring(0, 2), "port"->locode.substring(2)),
-							       "name" -> portName)
+					val portSelector = Json.obj("name" -> portName,
+							"locode" -> Json.obj("country"->locode.substring(0, 2), "port"->locode.substring(2)))
 
 					portsCollection.update(portSelector, port).map {
 						lastError =>
@@ -66,32 +79,23 @@ object Application extends Controller with MongoController {
 
 	def listAllPorts = Action.async {
 		logger.info("List all ports")
-		val cursor: Cursor[Port] = portsCollection.find(Json.obj()).sort(Json.obj("locode" -> 1)).cursor[Port]
-		// gather all the JsObjects in a list
-		val futurePortsList: Future[List[Port]] = cursor.collect[List]()
-		// transform the ports list into a Map with country as the key, i.e: 'AU' -> List[Ports]
-		val futurePortsMap: Future[Map[String, List[Port]]] =
-			futurePortsList.map(list => list.groupBy(port => port.locode.country))
-		// then transform the Map to a JsValue
-		val futurePortsMapJsonObj: Future[JsValue] = futurePortsMap.map {pMap => Json.toJson(pMap)}
-		// everything's ok! Let's reply with the array
-		futurePortsMapJsonObj.map { ports => Ok(ports)}
+		getPortsDataWithSelector(Json.obj()).map { ports => Ok(ports)}
 	}
 
 	def listPorts(frstChar: String) = Action.async {
-		logger.info("Pick ports with locode starts with " + frstChar)
-		val portsSelector = Json.obj("locode" -> Json.parse(frstChar))
-		logger.info("selects:" + portsSelector.toString())
+		logger.info("List ports with locode starts with " + frstChar)
+		val portsSelector = Json.obj("locode.country" -> Json.obj("$regex" -> "^".concat(frstChar)))
 		// pick all ports with a locode starting as 'frstChar...'
+		getPortsDataWithSelector(portsSelector).map { ports => Ok(ports)}
+	}
+
+	def getPortsDataWithSelector(portsSelector: JsObject): Future[JsValue] = {
 		val futurePortsList: Future[List[Port]] =
 			portsCollection.find(portsSelector).sort(Json.obj("locode" -> 1)).cursor[Port].collect[List]()
 		val futurePortsMap: Future[Map[String, List[Port]]] =
 			futurePortsList.map{ports => ports.groupBy(port => port.locode.country)}
 		// first transform the ports list into a Map with country as the key, i.e: 'AU' -> List[Ports]
 		// secondly transform the List[Ports] value to a JsArray
-		val futurePortsMapJsonObj: Future[JsValue] = futurePortsMap.map {pMap => Json.toJson(pMap)}
-		if(futurePortsMapJsonObj.isCompleted) logger.info("Got ports successfully!")
-
-		futurePortsMapJsonObj.map { ports => Ok(ports(0))}
+		futurePortsMap.map {pMap => Json.toJson(pMap)}
 	}
 }

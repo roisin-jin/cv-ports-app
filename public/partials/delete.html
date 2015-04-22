@@ -2,27 +2,30 @@
     <h3 class="modal-title">Delete Port:</h3>
 </div>
 
-<div class="modal-body col-sm-10">
+<div class="modal-body">
 
     <div class="container">
 
-        <table class="table">
+        <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Port Name</th>
-                    <th>Locode(country)</th>
-                    <th>Locode(port)</th>
-                    <th>Polygon(lat)</th>
-                    <th>Polygon(lon)</th>
+                    <th class="col-sm-1">Port Name</th>
+                    <th class="col-sm-1">Locode(ctry)</th>
+                    <th class="col-sm-1">Locode(port)</th>
+                    <th class="col-sm-2">Polygon(lat)</th>
+                    <th class="col-sm-1">Polygon(lon)</th>
                 </tr>
             </thead>
+            <tbody>
             <tr>
-                <td>{{dpc.port.name}}</td>
-                <td>{{dpc.port.locode.country}}</td>
-                <td>{{dpc.port.locode.port}}</td>
-                <td>{{dpc.port.polygon.lat}}</td>
-                <td>{{dpc.port.polygon.lon}}<td>
+                <td class="col-sm-1">{{dpc.port.name}}</td>
+                <td class="col-sm-1">{{dpc.port.locode.country}}</td>
+                <td class="col-sm-1">{{dpc.port.locode.port}}</td>
+                <td class="col-sm-2">{{dpc.port.polygon.lat}}</td>
+                <td class="col-sm-1">{{dpc.port.polygon.lon}}<td>
             </tr>
+
+            </tbody>
         </table>
 
     </div>

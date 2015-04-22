@@ -5,9 +5,9 @@ class CreatePortCtrl
         @$log.debug "constructing CreatePortController"
         @port = {}
 
-    CreatePort: () ->
-        @$log.debug "CreatePort()"
-        @portService.CreatePort(@port)
+    createPort: () ->
+        @$log.debug "createPort()"
+        @PortService.createPort(@port)
         .then(
             (data) =>
                 @$log.debug "Promise returned #{data} port"
