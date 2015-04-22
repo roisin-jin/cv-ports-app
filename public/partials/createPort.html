@@ -1,0 +1,109 @@
+<div ng-controller="CreatePortCtrl as cpc">
+
+    <br/><br/>
+
+    <div class="panel panel-primary">
+
+        <div class="panel-heading">
+            <h3>New Port Information: </h3>
+        </div>
+
+        <div class="panel-body">
+
+            <br/><br/>
+
+            <form id="CreatePortForm" name="CreatePortForm" class="form-horizontal" role="form" ng-submit="cpc.openConfirmModal()">
+
+                <div class="form-group">
+                    <label id="lbl_name" for="name" class="col-sm-5 control-label">
+                        <span class="red">* </span>Port Name :
+                    </label>
+
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="port name"
+                               popover="Max length of the name is 30 characters"  popover-trigger="focus"
+                               style="text-transform: capitalize" pattern="[\w\s-']{2,30}" ng-model="cpc.port.name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label id="lbl_locode_ct" for="locode_ct" class="col-sm-5 control-label">
+                        <span class="red">* </span>Country Code :
+                    </label>
+
+                    <div class="col-sm-2">
+                        <span class="dropdown" dropdown>
+                        <input type="text"  class="form-control dropdown-toggle" dropdown-toggle name="locode_ct" id="locode_ct"
+                               popover="Type in 2-char country code"  popover-trigger="focus" style="text-transform: uppercase"
+                               pattern="[a-zA-Z]{2}" ng-model="cpc.port.locode.country" required>
+                        </input>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="opt in cpc.countryOptions | filter: {value : cpc.port.locode.country}">
+                                <a href ng-click="cpc.assignCountryValue(opt.value)">{{opt.label}}</a>
+                            </li>
+                        </ul>
+                        </span>
+                    </div>
+
+                    <label id="lbl_locode_pt" for="locode_pt" class="col-sm-2 control-label">
+                        <span class="red">* </span>Port Code :
+                    </label>
+
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" name="locode_pt" id="locode_pt" placeholder=""
+                               popover="Type in 3 capital alphabets"  popover-trigger="focus" style="text-transform: uppercase"
+                               ng-model="cpc.port.locode.port" pattern="[a-zA-Z]{3}" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label id="lbl_latitue" for="polygon_latitue" class="col-sm-5 control-label">Latitue : </label>
+
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" name="polygon_latitue" id="polygon_latitue"
+                               step="any" ng-model="cpc.port.polygon.latitue">
+                    </div>
+
+                    <label id="lbl_longitude" for="polygon_longitude" class="col-sm-2 control-label">Longitude : </label>
+
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" name="polygon_longitude" id="polygon_longitude"
+                               step="any" ng-model="cpc.port.polygon.longitude">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label id="lbl_limit_wid" for="limit_wid" class="col-sm-5 control-label">Vessel Max Width:</label>
+
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" name="limit_wid" id="limit_wid"
+                               step="any" ng-model="cpc.port.limit.width">
+                    </div>
+
+                    <label id="lbl_limit_len" for="limit_len" class="col-sm-2 control-label">Vessel Max Length:</label>
+
+                    <div class="col-sm-2">
+                        <input type="number" class="form-control" name="limit_wid" id="limit_len"
+                               step="any" ng-model="cpc.port.limit.length">
+                    </div>
+                </div>
+
+                <br/><br/>
+
+                <div class="form-group">
+                    <div class="col-sm-offset-5 col-sm-6 text-right">
+                        <button type="submit" class="btn btn-success" id="btn_create">Create port</button>
+                        <button ng-href="/#/" id="btn_reset" class="btn btn-info" ng-click="cpc.resetAll()">Reset All</button>
+                        <button ng-href="/#/" id="btn_cancel" class="btn btn-primary">Cancel</button>
+                    </div>
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

@@ -2,7 +2,9 @@
     <br/>
 
     <div class="panel panel-primary">
-        <div class="panel-heading">Choose ports with Locode starting from <small>A-Z:</small></div>
+        <div class="panel-heading">
+            <h5>Start off by choosing ports with Locode (country) from A-Z:</h5>
+        </div>
         <div class="panel-body">
             <tabset type="pills">
                 <tab ng-repeat="cl in pc.countriesFrstChars" heading="{{cl}}" ng-click="pc.getPortsInCountriesStartsWith(cl)"></tab>
@@ -15,23 +17,27 @@
     <div class="row">
 
         <div class="col-md-4">
-            <div class="form-group">
-                <input class="form-control" type="text" ng-model="searchText" placeholder="Type here to filter Ports...">
+
+            <div class="form-group" ng-show="pc.availCountries.length > 5">
+                <input class="form-control" type="text" ng-model="code" placeholder="Now search by Country Code...">
                 <hr>
             </div>
 
             <accordion close-others="true">
-                <accordion-group ng-repeat="countryCode in pc.availCountries" is-open="status.open">
+                <accordion-group ng-repeat="ctryCode in pc.availCountries | filter: code" is-open="status.open">
                     <accordion-heading>
-                        {{countryCode}} - {{ISOCountries[countryCode]}}
+                        {{ctryCode}} - {{ISOCountries[ctryCode]}}
                         <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                     </accordion-heading>
 
+                    <div class="form-group" ng-show="pc.ports[ctryCode].length > 5">
+                        <input class="form-control" type="text" ng-model="search" placeholder="Then search by port name...">
+                    </div>
+
                     <table class="table table-striped">
-                        <tr ng-repeat="port in pc.ports[countryCode]">
+                        <tr ng-repeat="port in pc.ports[ctryCode] | filter: {name : search}">
                             <td class="align-left">
                                 {{port.locode.country }} {{port.locode.port}} ({{port.name}})
-                                <i class="glyphicon glyphicon-asterisk" ng-hide="port.polygon.lat"></i>
                             </td>
                             <td>
                                 <button popover="edit port" popover-trigger="mouseenter"
@@ -43,6 +49,7 @@
                             </td>
                         </tr>
                     </table>
+
                 </accordion-group>
                 <br/>
             </accordion>

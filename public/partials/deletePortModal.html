@@ -1,0 +1,38 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="modal-title">Delete Port:</h3>
+    </div>
+
+    <div class="panel-body">
+
+        <div class="container col-sm-offset-2 col-sm-8">
+
+            <span class="red" ng-show="msg">{{msg}}</span>
+
+            <ui class="list-group">
+                <li class="list-group-item">
+                    <strong>Port Name: </strong>{{cpc.port.name}}
+                </li>
+                <li class="list-group-item">
+                    <strong>Locode: </strong>{{cpc.port.locode.country}} {{cpc.port.locode.port}}
+                </li>
+                <li class="list-group-item">
+                    <strong>Polygon: </strong>{{cpc.port.polygon.lat}} , {{cpc.port.polygon.lon}}
+                </li>
+                <li class="list-group-item">
+                    <strong>Vessel Max Width: </strong>{{cpc.port.limit.width | number}}
+                </li>
+                <li class="list-group-item">
+                    <strong>Vessel Max length: </strong>{{cpc.port.limit.length | number}}m
+                </li>
+            </ui>
+
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-warning" ng-click="cpc.delete()">Delete</button>
+        <button class="btn btn-primary" ng-click="cpc.cancel()">Cancel</button>
+    </div>
+</div>

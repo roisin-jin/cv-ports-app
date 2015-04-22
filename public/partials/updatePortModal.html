@@ -1,0 +1,100 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="modal-title">Update Port:</h3>
+    </div>
+
+    <div class="panel-body">
+
+        <br/>
+
+        <form id="UpdatePortForm" name="UpdatePortForm" class="form-horizontal" role="form" ng-submit="upc.updatePort()">
+
+            <span class="red" ng-show="msg">{{msg}}</span>
+
+            <div class="form-group">
+                <label id="lbl_name" for="port_name" class="col-sm-3 control-label">
+                    <span class="red">* </span>Port Name:
+                </label>
+
+                <div class="col-sm-7">
+                    <input type="text" class="form-control" name="port_name" id="port_name" value="{{upc.updated_port.name}}"
+                           popover="Max length of the name is 30 characters"  popover-trigger="focus" pattern="[\w\s-']{2,30}"
+                           style="text-transform: capitalize" ng-model="upc.updated_port.name" required />
+                </div>
+            </div>
+
+            <div class="form-group row">
+
+                <label id="lbl_locode_ct" for="locode_ct" class="col-sm-3 control-label">
+                    <span class="red">* </span>Country code:
+                </label>
+
+                <div class="col-sm-2">
+                    <span class="dropdown" dropdown>
+                        <input type="text"  class="form-control dropdown-toggle" dropdown-toggle name="locode_ct" id="locode_ct"
+                               popover="Type in 2-char country code"  popover-trigger="focus" style="text-transform: uppercase"
+                               value="{{upc.updated_port.locode.country}}"
+                               pattern="[a-zA-Z]{2}" ng-model="upc.updated_port.locode.country" required>
+                        </input>
+                        <ul class="dropdown-menu" role="menu">
+                            <li ng-repeat="opt in upc.countryOptions | filter: {value : upc.updated_port.locode.country}">
+                                <a href ng-click="upc.assignCountryValue(opt.value)">{{opt.label}}</a>
+                            </li>
+                        </ul>
+                    </span>
+                </div>
+
+                <label id="lbl_locode_pt" for="locode_pt" class="col-sm-3 control-label">
+                    <span class="red">* </span>Port Code:
+                </label>
+
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" name="locode_pt" id="locode_pt" value="{{upc.updated_port.locode.port}}"
+                           popover="Type in 3 capital alphabets"  popover-trigger="focus" style="text-transform: uppercase"
+                           ng-model="upc.updated_port.locode.port" pattern="[A-Z]{3}" required />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label id="lbl_polygon_lat" for="polygon_lat" class="col-sm-3 control-label">Latitude:</label>
+
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" name="polygon_lat" id="polygon_lat" value="{{upc.updated_port.polygon.lat}}"
+                           step="any" ng-model="upc.updated_port.polygon.lat">
+                </div>
+
+                <label id="lbl_polygon_lon" for="polygon_lon" class="col-sm-3 control-label">Longitude:</label>
+
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" name="polygon_lon" id="polygon_lon" value="{{upc.updated_port.polygon.lon}}"
+                           ng-model="upc.updated_port.polygon.lon">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label id="lbl_limit_wid" for="limit_wid" class="col-sm-3 control-label">Vessel Max Width:</label>
+
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" name="limit_wid" id="limit_wid" value="{{upc.updated_port.limit.width}}"
+                           step="any" ng-model="upc.updated_port.limit.width">
+                </div>
+
+                <label id="lbl_limit_len" for="limit_len" class="col-sm-3 control-label">Vessel Max Length(m):</label>
+
+                <div class="col-sm-2">
+                    <input type="number" class="form-control" name="limit_wid" id="limit_len" value="{{upc.updated_port.limit.length}}"
+                           step="any" ng-model="upc.updated_port.limit.length">
+                </div>
+            </div>
+
+            <br/>
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-warning" id="btn_update">Update</button>
+                <button class="btn btn-primary" ng-click="upc.cancel()">Cancel</button>
+            </div>
+
+    </form>
+
+    </div>
+</div>

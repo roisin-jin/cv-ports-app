@@ -6,7 +6,6 @@ import scala.concurrent.Future
 
 import reactivemongo.api.Cursor
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import play.api.libs.concurrent.Promise
 import play.api._
 import play.api.mvc._
 import play.modules.reactivemongo.MongoController

@@ -19,8 +19,29 @@ footer {
    font-size: 18px;
 }
 
+.navbar-brand {
+   color: #fff
+}
+
 .red{
    color: red;
+}
+
+.color-primary{
+   background-color: #337ab7;
+}
+
+.text-primary{
+   color: #337ab7;
+}
+
+.dropdown-menu{
+   max-height: 300px;
+   overflow-y: auto;
+}
+
+.monospace{
+   font-family: @font-family-monospace;
 }
 
 .angular-google-map-container { height: 400px; }

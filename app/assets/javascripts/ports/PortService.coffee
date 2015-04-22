@@ -74,7 +74,7 @@ class PortService
 				deferred.promise
 
 		updatePort: (original_port, updated_port) ->
-			@$log.debug "update port #{angular.toJson(port, true)}"
+			@$log.debug "update port #{angular.toJson(original_port, true)}"
 			deferred = @$q.defer()
 			name = original_port.name
 			locode = original_port.locode.country + original_port.locode.port

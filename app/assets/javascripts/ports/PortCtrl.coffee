@@ -4,13 +4,7 @@ class PortCtrl
 		constructor: (@$log, @$modal, @$location, @$rootScope, @PortService) ->
 
 				@$log.debug "constructing PortController"
-
-				@countriesFrstChars = ["A", "B", "C", "D", "E",
-									   "F", "G", "H", "I", "J", 
-									   "K", "L", "M", "N", "O", 
-									   "P", "Q", "R", "S", "T", 
-									   "U", "V", "W", "Y", "Z"]
-
+				@countriesFrstChars = "ABCDEFGHIJKLMNOPQRSTUVWYZ".split("")
 				@ports = []
 				@availCountries = []
 				@getPortsInCountriesStartsWith("A")
@@ -39,13 +33,13 @@ class PortCtrl
 
 		openUpdateModal: (port) ->
 				@$log.debug "Opening update port modal"
-				port_value = {name: port.name,
-				locode: {country: port.locode.country, port: port.locode.port}}
+				port_value = {name: port.name, locode: {country: port.locode.country, port: port.locode.port}}
 
 				port_value.polygon = {lat: port.polygon.lat, lon: port.polygon.lon} if port.polygon
+				port_value.limit = {width: port.limit.width, length: port.limit.length} if port.limit
 
 				modalInstance = @$modal.open({
-					templateUrl: '/assets/partials/update.html',
+					templateUrl: '/assets/partials/updatePortModal.html',
 					controller: 'UpdatePortCtrl as upc',
 					size: 'lg',
 					resolve: {port_to_be_updated: () -> port_value}
@@ -57,12 +51,12 @@ class PortCtrl
 
 		openDeleteModal: (port) ->
 				@$log.debug "Opening delete port modal"
-				port_value = {name: port.name, locode: port.locode, polygon: port.polygon}
+				port_value = {name: port.name, locode: port.locode, polygon: port.polygon, limit: port.limit}
+
 				modalInstance = @$modal.open({
-									templateUrl: '/assets/partials/delete.html',
-									controller: 'DeletePortCtrl as dpc',
-									size: 'lg',
-									resolve: {port_to_be_deleted: () -> port_value}
+									templateUrl: '/assets/partials/deletePortModal.html',
+									controller: 'ConfirmPortCtrl as cpc',
+									resolve: {port_to_be_processed: () -> port_value}
 									})
 
 				modalInstance.result.then((deleted) => @$location.path("/listPorts")
