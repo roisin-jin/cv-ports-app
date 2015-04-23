@@ -30,18 +30,12 @@
                 </label>
 
                 <div class="col-sm-2">
-                    <span class="dropdown" dropdown>
-                        <input type="text"  class="form-control dropdown-toggle" dropdown-toggle name="locode_ct" id="locode_ct"
-                               popover="Type in 2-char country code"  popover-trigger="focus" style="text-transform: uppercase"
-                               value="{{upc.updated_port.locode.country}}"
-                               pattern="[a-zA-Z]{2}" ng-model="upc.updated_port.locode.country" required>
-                        </input>
-                        <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="opt in upc.countryOptions | filter: {value : upc.updated_port.locode.country}">
-                                <a href ng-click="upc.assignCountryValue(opt.value)">{{opt.label}}</a>
-                            </li>
-                        </ul>
-                    </span>
+                    <input type="text"  class="form-control" name="locode_ct" id="locode_ct"
+                           popover="Type in 2-char country code"  popover-trigger="focus" style="text-transform: uppercase"
+                           value="{{upc.updated_port.locode.country}}"
+                           typeahead="opt.label for opt in cpc.countryOptions | filter: {value: $viewValue}"
+                           pattern="[a-zA-Z]{2}" ng-model="upc.updated_port.locode.country" required>
+                    </input>
                 </div>
 
                 <label id="lbl_locode_pt" for="locode_pt" class="col-sm-3 control-label">
@@ -90,9 +84,9 @@
             <br/>
 
             <div class="modal-footer">
-                <button type="submit" class="btn btn-warning" id="btn_update">Update</button>&nbsp;
-                <button ng-click="upc.resetAll()" class="btn btn-info" id="btn_reset">Reset</button>&nbsp;
-                <button class="btn btn-primary" ng-click="upc.cancel()">Cancel</button>
+                <button type="submit" class="btn btn-warning">Update</button>&nbsp;
+                <button href="#" class="btn btn-info" ng-click="upc.resetAll()">Reset</button>&nbsp;
+                <button href="#" class="btn btn-primary" ng-click="upc.cancel()">Cancel</button>
             </div>
 
     </form>

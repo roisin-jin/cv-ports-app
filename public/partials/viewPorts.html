@@ -1,36 +1,37 @@
 <div ng-controller="PortCtrl as pc">
     <br/>
-
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <tabset type="pills">
-                <tab class="opensans" ng-repeat="cl in pc.countriesFrstChars" heading="{{cl}}"
-                     ng-click="pc.getPortsInCountriesStartsWith(cl)"></tab>
-            </tabset>
+    <a name="top"></a>
+    <nav>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="opensans">
+                    Choose ports' Locode (country) from A-Z:
+                </h5>
+            </div>
+            <div class="panel-body">
+                <tabset type="pills">
+                    <tab class="opensans" ng-repeat="cl in pc.countriesFrstChars" heading="{{cl}}"
+                         ng-click="pc.getPortsInCountriesStartsWith(cl)"></tab>
+                </tabset>
+            </div>
         </div>
-        <div class="panel-footer">
-            <h5 class="opensans">Choose ports' Locode (country) from A-Z:</h5>
-        </div>
-    </div>
-
-    <br />
+    </nav>
 
     <div class="row">
-
         <div class="col-md-5">
 
             <div class="form-group" ng-show="pc.availCountries.length > 5">
                 <input class="form-control" type="text" ng-model="code" placeholder="Now search by Country Code...">
-                <hr>
             </div>
 
+            <div class="accordion-list">
             <accordion close-others="true">
                 <accordion-group ng-repeat="ctryCode in pc.availCountries | filter: code" is-open="status.open">
                     <accordion-heading>
                         {{ctryCode}} - {{ISOCountries[ctryCode]}}
                         <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
                     </accordion-heading>
-
+                    <div class="table-list">
                     <div class="form-group" ng-show="pc.ports[ctryCode].length > 5">
                         <input class="form-control" type="text" ng-model="search" placeholder="Then search by port name...">
                     </div>
@@ -45,14 +46,16 @@
                                         class="pull-right glyphicon glyphicon-pencil" ng-click="pc.openUpdateModal(port)"></button>
                             </td>
                             <td>
-                                <button popover="delete port" popover-trigger="mouseenter"
+                                <button popover="check or delete port" popover-trigger="mouseenter"
                                         class="pull-left glyphicon glyphicon-remove" ng-click="pc.openDeleteModal(port)"></button>
                             </td>
                         </tr>
                     </table>
+                    </div>
                 </accordion-group>
                 <br/>
             </accordion>
+            </div>
 
             <div ng-hide="pc.availCountries.length">
                 <td colspan="3">
@@ -69,5 +72,7 @@
             </div>
         </div>
     </div>
+
+    <div class="fix-pos"><a href="#top">Back to top</a> </div>
 
 </div>

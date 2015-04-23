@@ -6,8 +6,11 @@
     <div class="panel-body">
 
         <div class="container col-sm-offset-2 col-sm-8">
-
-            <span class="red" ng-show="msg">{{msg}}</span>
+            <div class="panel panel-default" ng-show="cpc.msg">
+                <div class="panel-body">
+                    <span class="red">{{cpc.msg}}</span>
+                </div>
+            </div>
 
             <ui class="list-group">
                 <li class="list-group-item">

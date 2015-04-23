@@ -15,6 +15,7 @@ class CreatePortCtrl
 
 	resetAll: () ->
 				@port = {}
+				@msg = {}
 				@getEle('locode_ct').val('')
 				@getEle('locode_pt').val('')
 				return
@@ -22,12 +23,16 @@ class CreatePortCtrl
 	getEle: (elementId) -> angular.element(document.querySelector('#' + elementId))
 
 	validatePort: () ->
-		@msg = "Not valid Country code" if @port.locode.country not in (code.value for code in @countryOptions)
+		@$log.debug "Validating new port modal"
+		@msg = ''
+		countries = (co.value for co in @countryOptions) if @countryOptions
+		@msg = "Not valid Country code" if @port and @port.locode and @port.locode.country not in countries
 		valid = (@msg == '')
 
 	
 	openConfirmModal: () ->
-			if validatePort
+			valid = @validatePort()
+			if valid
 				@$log.debug "Opening confirm new port modal"
 				pname = @port.name.charAt(0).toUpperCase() + @port.name.slice(1)
 				plocode = {country: @port.locode.country.toUpperCase(), port: @port.locode.port.toUpperCase()}
@@ -42,6 +47,8 @@ class CreatePortCtrl
 				modalInstance.result.then((data) => @$location.path("/listPorts")
 										  ,
 										  () => @$log.info "Modal dismissed at: " + new Date())
+
+			else @$log.debug "Invalid new port"
 
 
 

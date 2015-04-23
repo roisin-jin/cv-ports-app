@@ -2,7 +2,7 @@
 class ConfirmPortCtrl
 
 	constructor: (@$log, @$modalInstance, @PortService, port_to_be_processed) ->
-			@$log.debug "constructing DeletePortController"
+			@$log.debug "constructing ConfirmPortController"
 			@port = port_to_be_processed
 			@unit = 'm' if @port.limit
 			@separator = ' , ' if @port.polygon and @port.polygon.lat and @port.polygon.lon
