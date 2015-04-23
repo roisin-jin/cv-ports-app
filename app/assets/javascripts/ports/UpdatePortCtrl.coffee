@@ -13,6 +13,12 @@ class UpdatePortCtrl
 	createCountryOption: (code, name) -> {label: code + ' - ' + name, value: code}
 	assignCountryValue: (value) -> @port.locode.country = value
 
+	resetAll: () ->
+    				@updated_port = angular.copy(@original_port)
+    				return
+
+    getEle: (elementId) -> angular.element(document.querySelector('#' + elementId))
+
 	updatePort: () ->
 			@updated_port.name = @updated_port.name.charAt(0).toUpperCase() + @updated_port.name.slice(1)
 			@updated_port.locode.country = @updated_port.locode.country.toUpperCase()

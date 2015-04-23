@@ -7,33 +7,41 @@
     <link rel="stylesheet" href='@routes.Assets.at("lib/bootstrap/css/bootstrap.css")'>
     <link rel="stylesheet" href='@routes.Assets.at("lib/bootstrap/css/bootstrap-theme.css")'>
     <link rel="stylesheet" media="screen" href='@routes.Assets.at("stylesheets/main.css")'>
+    <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
 </head>
+<>
 
-<body>
-<nav class="navbar navbar-static-top color-primary" role="navigation">
-    <div class="navbar-header">
-        <a class="navbar-brand">Commodity Vector</a>
+<header class="masthead">
+    <div class="row">
+        <div class="pull-left">
+            <a class="logo" ng-href="/#/"><img src="/assets/images/cv-logo.png" /></a>
+        </div>
+
+        <nav class="pull-right" ng-controller="TabSetCtrl as tc">
+            <ul>
+                <li ng-repeat="tb in tc.tabs">
+                    <a ng-href="{{tb.goto}}">
+                        <span class="nav-text"><strong>{{tb.heading}}</strong></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
-</nav>
 
-<div class="container">
-    <div class="jumbotron">
-        <div class="cv-logo"></div>
-        <br/>
-        <p class="monospace text-center">
-            <i class="glyphicon glyphicon-globe"></i> Globe Ports Data Tracking</p>
-    </div>
+</header>
+<br/><br/><br/>
 
-    <section ng-controller="TabSetCtrl as tc">
-        <ul class="nav nav-tabs" id="cvPortTab">
-            <li ng-repeat="tb in tc.tabs" ng-class="{active: tc.isSet(tb.id)}">
-                <a ng-href="{{tb.goto}}" ng-click="tc.setTab(tb.id)">{{tb.heading}}</a></li>
-        </ul>
-    </section>
-
-    <div class="container-fluid" ng-view></div>
-
+<div class="front">
+    <header class="content">
+        <div class="img" style="background-image:url('/assets/images/header_pic.jpg');">
+            <br/><br/><br/>
+            <p class="text">Dedicated to track globe Ports</p>
+        </div>
+    </header>
 </div>
+
+<div class="container row" ng-view></div>
 
 <footer>
     <hr/>
