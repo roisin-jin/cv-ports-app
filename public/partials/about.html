@@ -6,38 +6,44 @@
 </div>
 <br/>
 <div>
-<p class="about opensans ">
-This ports management tool is built mainly upon Play with scala, angularJs written in both javascript and coffeecript.<br/>All the data info are scrapyed from <a href="http://www.unece.org/cefact/locode/service/location.html">UNECE</a> by a python tool called <a href="http://scrapy.org/">Scrapy</a>. <br/>
-To start off, please pick a country code that the port you're looking for is located in. Then you can do loads interesting things from there (At least I believe so...)<br/>
+<p class="about opensans">
+This ports management tool is built mainly upon Play with scala, angularJs written in both javascript and coffeecript. Also thanks for Bootstrap and AngularUI for the pretty layout. <br/><br/>All the data info you can find in this website were all scrapyed from <a href="http://www.unece.org/cefact/locode/service/location.html">UNECE</a> by a python tool called <a href="http://scrapy.org/">Scrapy</a>. <br/><br/>
+To start off, please pick a country code that the port you're looking for is located in. Then you can do loads interesting things from there (At least I believe so...)<br/><br/>
 I really hope you can enjoy the time spent here, if not, then please enjoy your tea and sandwich...
 </p>
 </div>
 
 <br/><br/><br/>
-
+<div style="vertical-align: top;">
+   <h1 class="text-center opensans">About Commodity Vectors</h1>
+</div>
+<br/>
 <div>
-<p>Commodity Vectors is in charge of predicting to where large cargo ships are headed. To fulfil this mission the company must keep up to date records about all the ports around the world and the vessels it tracks.</p>
+<p class="about opensans">Commodity Vectors is in charge of predicting to where large cargo ships are headed. To fulfil this mission the company must keep up to date records about all the ports around the world and the vessels it tracks.</p>
 </div>
 
+<br/><br/>
 <div>
  <h1 class="poiretone text-center">So Now it's the time to Meet the Team</h1>
 </div>
 
+<br/><br/>
+
  <div class="row">
-  <div style="height: 300px; width: 300px">
+  <div style="height: 400px; width: 350px" class="col-md-offset-4">
     <carousel interval="myInterval">
       <slide ng-repeat="slide in slides" active="slide.active">
-        <img ng-src="{{slide.image}}" style="margin:auto;">
+        <img ng-src="{{slide.image}}">
         <div class="carousel-caption">
-          <h4>Slide {{$index}}</h4>
           <p>{{slide.text}}</p>
-        </div>
+      </div>
       </slide>
     </carousel>
   </div>
   </div>
 
-  <h2 class="align-center poiretone">Thanks for your tolerance...</h2>
+  <br/><br/>
+  <h2 class="text-center poiretone">Thanks for your tolerance...</h2>
 </div>  
 
 </div>
