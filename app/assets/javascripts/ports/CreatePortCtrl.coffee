@@ -44,7 +44,9 @@ class CreatePortCtrl
 											resolve: {port_to_be_processed: () -> port_value}
 											})
 
-				modalInstance.result.then((data) => @$location.path("/listPorts")
+				modalInstance.result.then((data) => 
+				                                @resetAll()
+				                                @msg = "New port successfully created, please add another one!"
 										  ,
 										  () => @$log.info "Modal dismissed at: " + new Date())
 

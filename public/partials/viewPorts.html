@@ -9,7 +9,7 @@
             </div>
             <div class="panel-body">
                 <tabset type="pills">
-                    <tab class="opensans" ng-repeat="cl in pc.countriesFrstChars" heading="{{cl}}"
+                    <tab class="opensans" id="tab_{{cl}}" ng-repeat="cl in pc.countriesFrstChars" heading="{{cl}}"
                          ng-click="pc.getPortsInCountriesStartsWith(cl)"></tab>
                 </tabset>
             </div>
