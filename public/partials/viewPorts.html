@@ -1,11 +1,10 @@
 <div ng-controller="PortCtrl as pc">
     <br/>
-    <a name="top"></a>
     <nav>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h5 class="opensans">
-                    Choose ports' Locode (country) from A-Z:
+                    Start viewing ports by choose Locode (country) from A-Z:
                 </h5>
             </div>
             <div class="panel-body">
@@ -17,8 +16,10 @@
         </div>
     </nav>
 
+
+
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-5 pull-left">
 
             <div class="form-group" ng-show="pc.availCountries.length > 5">
                 <input class="form-control" type="text" ng-model="code" placeholder="Now search by Country Code...">
@@ -28,8 +29,10 @@
             <accordion close-others="true">
                 <accordion-group ng-repeat="ctryCode in pc.availCountries | filter: code" is-open="status.open">
                     <accordion-heading>
+                        <p ng-click="pc.resetMapCenterAndLoadGmarkers(ctryCode)">
                         {{ctryCode}} - {{ISOCountries[ctryCode]}}
                         <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                        </p>
                     </accordion-heading>
                     <div class="table-list">
                     <div class="form-group" ng-show="pc.ports[ctryCode].length > 5">
@@ -38,16 +41,19 @@
 
                     <table class="table table-striped">
                         <tr ng-repeat="port in pc.ports[ctryCode] | filter: {name : search}">
+                            <td class="aligh-right">
+                            <a href="#" ng-show="port.polygon.lat" ng-click="pc.resetMapCenter(port.polygon)" class="glyphicon glyphicon-map-marker" popover="See where I am!" popover-trigger="mouseenter"></a>
+                            </td>
                             <td class="align-left">
                                 <p class="port-info">{{port.locode.country }} {{port.locode.port}} ({{port.name}})</p>
                             </td>
                             <td>
-                                <button popover="edit port" popover-trigger="mouseenter"
-                                        class="pull-right glyphicon glyphicon-pencil" ng-click="pc.openUpdateModal(port)"></button>
+                                <button popover="Update my info" popover-trigger="mouseenter"
+                                        class="pull-right glyphicon glyphicon-edit" ng-click="pc.openUpdateModal(port)"></button>
                             </td>
                             <td>
-                                <button popover="check or delete port" popover-trigger="mouseenter"
-                                        class="pull-left glyphicon glyphicon-remove" ng-click="pc.openDeleteModal(port)"></button>
+                                <button popover="Or abandon me...T_T" popover-trigger="mouseenter"
+                                        class="pull-left glyphicon glyphicon-trash" ng-click="pc.openDeleteModal(port)"></button>
                             </td>
                         </tr>
                     </table>
@@ -64,15 +70,21 @@
             </div>
         </div>
 
-        <div class="col-md-9">
-            <div id="map_canvas" ng-hide="pc.availCountries.length">
-                <ui-gmap-google-map center="pc.map.center" zoom="pc.map.zoom" draggable="true" options="pc.options">
-                    <ui-gmap-markers models="pc.gmarkers" coords="'self'" icon="'icon'"></ui-gmap-markers>
-                </ui-gmap-google-map>
+        <div id="map_canvas" ng-if="map.show" class="pull-right">
+            <br/><br/>
+            <div class="pull-right">
+              <a href="#" ng-click="pc.resetMapToInitial()" class="opensans">Reset Map</a>
             </div>
+            <br/>
+            <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options"
+                                bounds="map.bounds" pan="true">
+                <ui-gmap-markers ng-if="pc.gmarkers" models="pc.gmarkers" doRebuildAll="true"
+                                 coords="'self'" icon="'icon'">
+                    <ui-gmap-windows show="'showWindow'" doRebuildAll="true">
+                        <p class="opensans" ng-non-bindable>{{title}}</p>
+                    </ui-gmap-windows>
+                </ui-gmap-markers>
+            </ui-gmap-google-map>
         </div>
     </div>
-
-    <div class="fix-pos"><a href="#top">Back to top</a> </div>
-
 </div>

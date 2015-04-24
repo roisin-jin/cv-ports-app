@@ -28,7 +28,10 @@ footer {
    overflow-y: auto;
 }
 
-.angular-google-map-container { height: 400px; }
+.angular-google-map-container {
+width: 600px;
+height: 600px;
+}
 
 .masthead {
   height: 70px;
@@ -96,6 +99,7 @@ footer {
 .port-info {
   font-family: 'Open Sans', sans-serif;
   font-size: 15px;
+  color: @brand-primary;
 }
 
 .opensans {
