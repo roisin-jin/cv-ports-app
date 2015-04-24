@@ -1,7 +1,7 @@
 
 class PortCtrl
 
-		constructor: (@$log, @$modal, @$location, @$routeParams, @$rootScope, @PortService, @uiGmapGoogleMapApi) ->
+		constructor: (@$log, @$modal, @$location, @$route, @$routeParams, @$rootScope, @PortService, @uiGmapGoogleMapApi) ->
 
 				@$log.debug "constructing PortController"
 				@countriesFrstChars = "ABCDEFGHIJKLMNOPQRSTUVWYZ".split("")
@@ -84,6 +84,8 @@ class PortCtrl
 								@$log.error "Unable to get Ports: #{error}"
 					)
 
+		forceRefreshNeeded: (newPath) -> newPath == @$location.path()
+
 		openUpdateModal: (port) ->
 				@$log.debug "Opening update port modal"
 				port_value = {name: port.name, locode: {country: port.locode.country, port: port.locode.port}}
@@ -98,7 +100,12 @@ class PortCtrl
 					resolve: {port_to_be_updated: () -> port_value}
 					})
 
-				modalInstance.result.then((updated_port) => @$location.path('/listPorts/' + port.locode.country.charAt(0))
+				modalInstance.result.then((updated_port) => 
+				                           goto = '/listPorts/' + port.locode.country.charAt(0)
+				                           if @forceRefreshNeeded(goto)
+				                               @$route.reload()
+				                           else
+				                               @$location.path(goto)
 										   ,
 										   () => @$log.info "Modal dismissed at: " + new Date())
 
@@ -112,7 +119,12 @@ class PortCtrl
 									resolve: {port_to_be_processed: () -> port_value}
 									})
 
-				modalInstance.result.then((deleted) => @$location.path('/listPorts/' + port.locode.country.charAt(0))
+				modalInstance.result.then((deleted) => 
+				                           goto = '/listPorts/' + port.locode.country.charAt(0)
+				                           if forceRefreshNeeded(goto)
+				                               @$route.reload()
+				                           else
+				                               @$location.path(goto)
 										   ,
 										   () => @$log.info "Modal dismissed at: " + new Date())
 
