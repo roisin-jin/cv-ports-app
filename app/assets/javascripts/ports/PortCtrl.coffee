@@ -1,7 +1,7 @@
 
 class PortCtrl
 
-		constructor: (@$log, @$modal, @$location, @$rootScope, @PortService, @uiGmapGoogleMapApi) ->
+		constructor: (@$log, @$modal, @$location, @$routeParams, @$rootScope, @PortService, @uiGmapGoogleMapApi) ->
 
 				@$log.debug "constructing PortController"
 				@countriesFrstChars = "ABCDEFGHIJKLMNOPQRSTUVWYZ".split("")
@@ -10,8 +10,10 @@ class PortCtrl
 				@$rootScope.map = {}
 				@$rootScope.mapSDK = []
 				@geocoder = {}
-				@getPortsInCountriesStartsWith("A")
 				@loadISOCountriesIfNeeded()
+				frstChar = "A"
+				frstChar = @$routeParams.frstLetter if @$routeParams.frstLetter?
+				@getPortsInCountriesStartsWith(frstChar)				
 
 		loadGoogleMap: () ->
 			@$log.debug "loading google map"
@@ -70,7 +72,6 @@ class PortCtrl
 
 		getPortsInCountriesStartsWith: (frstChar) ->
 				@$log.debug "getPortsWithCountriesWith #{frstChar}"
-
 				@PortService.listPortsStartsWith(frstChar)
 				.then(
 						(data) =>
@@ -97,7 +98,7 @@ class PortCtrl
 					resolve: {port_to_be_updated: () -> port_value}
 					})
 
-				modalInstance.result.then((updated_port) => @getPortsInCountriesStartsWith(updated_port.locode.country.charAt(0))
+				modalInstance.result.then((updated_port) => @$location.path('/listPorts/' + port.locode.country.charAt(0))
 										   ,
 										   () => @$log.info "Modal dismissed at: " + new Date())
 
@@ -111,7 +112,7 @@ class PortCtrl
 									resolve: {port_to_be_processed: () -> port_value}
 									})
 
-				modalInstance.result.then((deleted) => @$location.path("/listPorts")
+				modalInstance.result.then((deleted) => @$location.path('/listPorts/' + port.locode.country.charAt(0))
 										   ,
 										   () => @$log.info "Modal dismissed at: " + new Date())
 
