@@ -15,6 +15,7 @@ angular.module('cvPortsApp.routeConfig', ['ngRoute'])
 			$routeProvider
 				.when('/', {templateUrl: '/assets/partials/viewPorts.html'})
 				.when('/listPorts', {templateUrl: '/assets/partials/viewPorts.html'})
+				.when('/listPorts/:frstLetter', {templateUrl: '/assets/partials/viewPorts.html'})
 				.when('/port/create', {templateUrl: '/assets/partials/createPort.html'})
 				.when('/about', {templateUrl: '/assets/partials/about.html'})
 				.otherwise({redirectTo: '/'})
