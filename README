@@ -1,6 +1,9 @@
 This app is specifically built for Commodiy Vector tech test.
 
-The project is built upon Play with scala, angularJs and mongoDb
-=================================
+The project is built upon Play with scala, angularJs and mongoDb.
 
-This file will be packaged with your application, when using `activator dist`.
+There's a diectory called 'mongodbData', where stores all the data used for this application. Those data were backed up by mongodump, so feel free to import it. Otherwise, you can also create your all data, which will definitly takes a lot time...
+
+Even you may wish to create your own data for ports object, the app wont run properly if ISO 3361 country list data is not there in the DB. So please import the countries data before using it.
+
+Have fun!
