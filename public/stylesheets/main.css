@@ -13,8 +13,6 @@ footer {
    color: red;
 }
 
-.ju@brand-primary
-
 .color-primary{
    background-color: #337ab7;
 }
@@ -164,4 +162,9 @@ nav.slide-menu-bottom {
 .accordion-list{
    max-height: 600px;
    overflow-y: auto;
+}
+
+.about{
+  font-size: 15px;
+  color: @brand-primary;
 }

@@ -31,7 +31,7 @@ class ConfirmPortCtrl
             ,
             (error) =>
                 @$log.error "Unable to create port: #{error}"
-                @msg = error
+                @msg = "Port with the same locode already existed!"
             )
 
 	cancel: () -> @$modalInstance.dismiss("cancel")

@@ -1,10 +1,43 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<div ng-controller="AboutCtrl">
+<br/><br/>
+<div class="container col-md-12">
+<div style="vertical-align: top;">
+   <h1 class="text-center opensans">About The Project</h1>
+</div>
+<br/>
+<div>
+<p class="about opensans ">
+This ports management tool is built mainly upon Play with scala, angularJs written in both javascript and coffeecript.<br/>All the data info are scrapyed from <a href="http://www.unece.org/cefact/locode/service/location.html">UNECE</a> by a python tool called <a href="http://scrapy.org/">Scrapy</a>. <br/>
+To start off, please pick a country code that the port you're looking for is located in. Then you can do loads interesting things from there (At least I believe so...)<br/>
+I really hope you can enjoy the time spent here, if not, then please enjoy your tea and sandwich...
+</p>
+</div>
 
-</body>
-</html>
+<br/><br/><br/>
+
+<div>
+<p>Commodity Vectors is in charge of predicting to where large cargo ships are headed. To fulfil this mission the company must keep up to date records about all the ports around the world and the vessels it tracks.</p>
+</div>
+
+<div>
+ <h1 class="poiretone text-center">So Now it's the time to Meet the Team</h1>
+</div>
+
+ <div class="row">
+  <div style="height: 300px; width: 300px">
+    <carousel interval="myInterval">
+      <slide ng-repeat="slide in slides" active="slide.active">
+        <img ng-src="{{slide.image}}" style="margin:auto;">
+        <div class="carousel-caption">
+          <h4>Slide {{$index}}</h4>
+          <p>{{slide.text}}</p>
+        </div>
+      </slide>
+    </carousel>
+  </div>
+  </div>
+
+  <h2 class="align-center poiretone">Thanks for your tolerance...</h2>
+</div>  
+
+</div>

@@ -28,7 +28,7 @@ class UpdatePortCtrl
 							  ,
 							  (error) =>
 								  @$log.error "Unable to update Port: #{error}"
-								  @msg = error
+								  @msg = "Port with the same locode already existed!"
 							  )
 
 	cancel: () ->
