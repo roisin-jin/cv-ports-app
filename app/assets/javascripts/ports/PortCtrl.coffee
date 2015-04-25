@@ -1,7 +1,7 @@
 
 class PortCtrl
 
-		constructor: (@$log, @$modal, @$location, @$routeParams, @$rootScope, @PortService, @uiGmapGoogleMapApi) ->
+		constructor: (@$log, @$modal, @$location, @$route, @$routeParams, @$rootScope, @PortService, @uiGmapGoogleMapApi) ->
 
 				@$log.debug "constructing PortController"
 				@countriesFrstChars = "ABCDEFGHIJKLMNOPQRSTUVWYZ".split("")
@@ -13,8 +13,7 @@ class PortCtrl
 				@loadISOCountriesIfNeeded()
 				frstChar = "A"
 				frstChar = @$routeParams.frstLetter if @$routeParams.frstLetter?
-				@getPortsInCountriesStartsWith(frstChar)
-				
+				@getPortsInCountriesStartsWith(frstChar)				
 
 		loadGoogleMap: () ->
 			@$log.debug "loading google map"
@@ -73,9 +72,6 @@ class PortCtrl
 
 		getPortsInCountriesStartsWith: (frstChar) ->
 				@$log.debug "getPortsWithCountriesWith #{frstChar}"
-				@getEle("tab_A").removeClass("active") if frstChar != "A"
-				@getEle("tab_" + frstChar).toggleClass("active")
-
 				@PortService.listPortsStartsWith(frstChar)
 				.then(
 						(data) =>
@@ -88,7 +84,7 @@ class PortCtrl
 								@$log.error "Unable to get Ports: #{error}"
 					)
 
-		getEle: (elementId) -> angular.element(document.querySelector('#' + elementId))
+		forceRefreshNeeded: (newPath) -> newPath == @$location.path()
 
 		openUpdateModal: (port) ->
 				@$log.debug "Opening update port modal"
@@ -104,7 +100,12 @@ class PortCtrl
 					resolve: {port_to_be_updated: () -> port_value}
 					})
 
-				modalInstance.result.then((updated_port) => @$location.path('/listPorts/' + port.locode.country.charAt(0))
+				modalInstance.result.then((updated_port) => 
+				                           goto = '/listPorts/' + port.locode.country.charAt(0)
+				                           if @forceRefreshNeeded(goto)
+				                               @$route.reload()
+				                           else
+				                               @$location.path(goto)
 										   ,
 										   () => @$log.info "Modal dismissed at: " + new Date())
 
@@ -118,7 +119,12 @@ class PortCtrl
 									resolve: {port_to_be_processed: () -> port_value}
 									})
 
-				modalInstance.result.then((deleted) => @$location.path('/listPorts/' + port.locode.country.charAt(0))
+				modalInstance.result.then((deleted) => 
+				                           goto = '/listPorts/' + port.locode.country.charAt(0)
+				                           if forceRefreshNeeded(goto)
+				                               @$route.reload()
+				                           else
+				                               @$location.path(goto)
 										   ,
 										   () => @$log.info "Modal dismissed at: " + new Date())
 
